@@ -1,5 +1,5 @@
-ifndef DYLIB_DIR
-  DYLIB_DIR = /opt/simject
+ifndef SIM_ROOT
+  SIM_ROOT = /opt/simject
 endif
 
 ifndef ARCH
@@ -18,8 +18,8 @@ clean::
 build : resim.mm
 	@mkdir -p out
 	@echo "$(PREFIX) Compiling resim for $(shell clang -print-target-triple)"
-	@echo "$(SUB_PREFIX) Target directory is $(DYLIB_DIR)"
-	@$(CXX) resim.mm $(ARCHFLAG) $(SYSROOTFLAG) -framework Foundation -DDYLIB_DIR=@\"$(DYLIB_DIR)\" -o out/resim
+	@echo "$(SUB_PREFIX) Target directory is $(SIM_ROOT)"
+	@$(CXX) resim.mm $(ARCHFLAG) $(SYSROOTFLAG) -framework Foundation -DSIM_ROOT=@\"$(SIM_ROOT)\" -o out/resim
 	@echo "$(SUB_PREFIX) Signing..."
 	@codesign -f -s - out/resim
 	@echo "$(SUB_PREFIX) Copying library..."

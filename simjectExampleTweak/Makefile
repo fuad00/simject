@@ -1,11 +1,17 @@
 # ARM Mac
 TARGET = simulator:clang::12.0
-ARCHS = arm64
+ARCHS = x86_64 arm64
+
+export THEOS_PACKAGE_SCHEME = rootless
+# export THEOS_PACKAGE_INSTALL_PREFIX = /opt/simject
+export IPHONE_SIMULATOR_ROOT = /opt/simject
+# export LOGOS_DEFAULT_GENERATOR = MobileSubstrate
 
 # Intel Mac
 # TARGET = simulator:clang::7.0
 # ARCHS = x86_64 i386
 # i386 slice is required for 32-bit iOS Simulator (iPhone 5, etc.)
+# export TARGET_CODESIGN_FLAGS = --sign '-'
 
 DEBUG = 0
 

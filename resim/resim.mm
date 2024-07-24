@@ -76,7 +76,7 @@ string exec(const char *cmd) {
 
 void injectHeader() {
 	globalHeader();
-	printf("Injecting appropriate dynamic libraries from %s...\n", [DYLIB_DIR UTF8String]);
+	printf("Injecting appropriate dynamic libraries from %s...\n", [SIM_ROOT UTF8String]);
 }
 
 string anyBootedDevices() {
@@ -111,13 +111,13 @@ void inject(const char *uuid, const char *device, const char *version, BOOL _exi
 				}
 				uuid = strdup(suuid.c_str());
 			}
-			safe_system([[NSString stringWithFormat:@"plutil -replace bootstrap.child.DYLD_INSERT_LIBRARIES -string %@/simject.dylib %@/Library/Developer/CoreSimulator/Devices/%@/data/var/run/launchd_bootstrap.plist -s", DYLIB_DIR, NSHomeDirectory(), @(uuid)] UTF8String]);
+			safe_system([[NSString stringWithFormat:@"plutil -replace bootstrap.child.DYLD_INSERT_LIBRARIES -string %@/simject.dylib %@/Library/Developer/CoreSimulator/Devices/%@/data/var/run/launchd_bootstrap.plist -s", SIM_ROOT, NSHomeDirectory(), @(uuid)] UTF8String]);
 			safe_system("killall launchd_sim");
 		} else {
 #endif
-			safe_system([[NSString stringWithFormat:@"xcrun simctl spawn %s launchctl setenv DYLD_INSERT_LIBRARIES %@/simject.dylib", uuid, DYLIB_DIR] UTF8String]);
-			safe_system([[NSString stringWithFormat:@"xcrun simctl spawn %s launchctl setenv __XPC_DYLD_INSERT_LIBRARIES %@/simject.dylib", uuid, DYLIB_DIR] UTF8String]);
-			safe_system([[NSString stringWithFormat:@"export SIMCTL_CHILD_DYLD_INSERT_LIBRARIES=%@/simject.dylib; xcrun simctl spawn %s launchctl stop com.apple.backboardd", DYLIB_DIR, uuid] UTF8String]);
+			safe_system([[NSString stringWithFormat:@"xcrun simctl spawn %s launchctl setenv DYLD_INSERT_LIBRARIES %@/simject.dylib", uuid, SIM_ROOT] UTF8String]);
+			safe_system([[NSString stringWithFormat:@"xcrun simctl spawn %s launchctl setenv __XPC_DYLD_INSERT_LIBRARIES %@/simject.dylib", uuid, SIM_ROOT] UTF8String]);
+			safe_system([[NSString stringWithFormat:@"export SIMCTL_CHILD_DYLD_INSERT_LIBRARIES=%@/simject.dylib; xcrun simctl spawn %s launchctl stop com.apple.backboardd", SIM_ROOT, uuid] UTF8String]);
 #ifdef IOS7_SUPPORT
 		}
 #endif

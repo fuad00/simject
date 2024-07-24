@@ -2,7 +2,7 @@
 #import <dlfcn.h>
 #import <os/log.h>
 
-#define dylibDir DYLIB_DIR
+#define dylibDir SIM_ROOT "/Library/MobileSubstrate/DynamicLibraries"
 
 static NSArray *blackListForFLEX;
 
@@ -12,7 +12,7 @@ NSArray *simjectGenerateDylibList() {
 	if ([processName isEqualToString:@"launchctl"]) {
 		return nil;
 	}
-	// Create an array containing all the filenames in dylibDir (/opt/simject)
+	// Create an array containing all the filenames in dylibDir/Library/MobileSubstrate/DynamicLibraries (/opt/simject)
 	NSError *e = nil;
 	NSArray *dylibDirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dylibDir error:&e];
 	if (e) {
